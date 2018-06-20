@@ -1,0 +1,7 @@
+authors = ["Robert Luke"]
+name = "NIRX"
+uuid = "6c3f7940-73c9-11e8-2524-a7d121bfcb23"
+version = "0.1.0"
+
+[deps]
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
