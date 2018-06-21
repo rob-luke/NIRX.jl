@@ -18,15 +18,18 @@ function read_NIRX(directory::String)
 
     # Determine base filename
     file_basename = directory_files[[endswith(filename, "wl1") for filename in directory_files]][1][1:end-4]
-    @info "Base file name is $file_basename"
+    @debug "Base file name is $file_basename"
 
     triggers = read_event_file(string(directory, "/", file_basename, ".evt"))
     header_info, header_triggers, header_SD = read_header_file(string(directory, "/", file_basename, ".hdr"))
+    info  = read_information_file(string(directory, "/", file_basename, ".inf"))
+    wl1  = read_wavelength_file(string(directory, "/", file_basename, ".wl1"))
+    wl2  = read_wavelength_file(string(directory, "/", file_basename, ".wl2"))
 
     @assert triggers[:, 1] == header_triggers[:, 3] "Header and event files do not match"
     @assert triggers[:, 2] == header_triggers[:, 2] "Header and event files do not match"
 
-    return header_info
+    return header_info, info, wl1, wl2
 end
 
 
@@ -47,7 +50,7 @@ function read_event_file(filename::String)
     end
     event_values_out = vec(event_values_out)
     triggers = [event_times event_values_out]
-    @info "Imported $(size(event_file_raw_data, 1)) events"
+    @debug "Imported $(size(event_file_raw_data, 1)) events"
 
     return triggers
 end
@@ -120,9 +123,34 @@ function read_header_file(filename::String)
     # SD is source, detector, index, mask
 
 
+    @debug "Imported header data from file $filename"
     return HDR, triggers, header_SD
 end
 
+
+function read_information_file(filename::String)
+
+    f = open(filename)
+    INF = Dict()
+    line_out = readline(f)
+    while !eof(f)
+        line_out = readline(f)
+        if !isempty(line_out) & occursin("=", line_out)
+            split_string = split(line_out, "=")
+            split_string[2] = replace(split_string[2], "\"" => "")
+            INF[split_string[1]] = split_string[2]
+        end
+    end
+
+    @debug "Imported information data from file $filename"
+    return INF
+end
+
+function read_wavelength_file(filename::String)
+    data = readdlm(filename)
+    @debug "Imported wavelength data from file $filename"
+    return data
+end
     
 end
 
