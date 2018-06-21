@@ -25,11 +25,12 @@ function read_NIRX(directory::String)
     info  = read_information_file(string(directory, "/", file_basename, ".inf"))
     wl1  = read_wavelength_file(string(directory, "/", file_basename, ".wl1"))
     wl2  = read_wavelength_file(string(directory, "/", file_basename, ".wl2"))
+    config  = read_config_file(string(directory, "/", file_basename, "_config.txt"))
 
     @assert triggers[:, 1] == header_triggers[:, 3] "Header and event files do not match"
     @assert triggers[:, 2] == header_triggers[:, 2] "Header and event files do not match"
 
-    return header_info, info, wl1, wl2
+    return triggers, header_info, info, wl1, wl2, config
 end
 
 
@@ -150,6 +151,23 @@ function read_wavelength_file(filename::String)
     data = readdlm(filename)
     @debug "Imported wavelength data from file $filename"
     return data
+end
+
+
+function read_config_file(filename::String)
+
+    f = open(filename)
+    CFG = Dict()
+    while !eof(f)
+        line_out = readline(f)
+        if !isempty(line_out) & occursin("=", line_out)
+            split_string = split(line_out, "=")
+            split_string[2] = replace(split_string[2], "\"" => "")
+            CFG[split_string[1]] = split_string[2]
+        end
+    end
+    @debug "Imported config data from file $filename"
+    return CFG
 end
     
 end
