@@ -1,0 +1,15 @@
+language: julia
+sudo: required
+os:
+  - linux
+  - osx
+julia:
+  - nightly
+notifications:
+  email: false
+git:
+  depth: 99999999
+
+## uncomment the following lines to override the default test script
+script:
+- julia -e 'using Pkg; Pkg.add(pwd()); Pkg.test("NIRX")'
