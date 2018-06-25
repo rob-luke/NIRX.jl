@@ -12,4 +12,4 @@ git:
 
 ## uncomment the following lines to override the default test script
 script:
-- julia -e 'using Pkg; Pkg.add(pwd()); Pkg.test("NIRX")'
+- julia -e 'Pkg.clone("https://github.com/rob-luke/NIRX.jl.git"); Pkg.test("NIRX")'
