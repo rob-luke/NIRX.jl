@@ -7,11 +7,7 @@ julia:
   - nightly
 notifications:
   email: false
-git:
-  depth: 99999999
 
 ## uncomment the following lines to override the default test script
 script:
-- julia -e 'Pkg.clone(pwd())'
-- julia -e 'Pkg.build("NIRX")'
 - julia -e 'Pkg.test("NIRX")'
