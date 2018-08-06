@@ -11,4 +11,4 @@ notifications:
 
 ## uncomment the following lines to override the default test script
 script:
-- julia -e 'Pkg.test("NIRX")'
+- julia -e 'using Pkg; Pkg.test("NIRX")'
