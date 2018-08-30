@@ -32,7 +32,8 @@ triggers, header_info, info, wl1, wl2, config = read_NIRX(string(datadep"NIRX te
 
 wl1_true = h5read(string(datadep"NIRX results file 1", "/fNIRS-test-data.h5"), "wl1")
 wl2_true = h5read(string(datadep"NIRX results file 1", "/fNIRS-test-data.h5"), "wl2")
+tri_true = h5read(string(datadep"NIRX results file 1", "/fNIRS-test-data.h5"), "triggers")
 
 @test wl1[:, Bool.(header_info["SourceDetectorMask"][:, 4])] == wl1_true
 @test wl2[:, Bool.(header_info["SourceDetectorMask"][:, 4])] == wl2_true
-
+@test triggers == tri_true
