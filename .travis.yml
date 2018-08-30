@@ -15,6 +15,10 @@ notifications:
 env:
   global:
     - DATADEPS_ALWAYS_ACCEPT=true  
+addons:
+  apt:
+    packages:
+      - hdf5-tools
 
 ## uncomment the following lines to override the default test script
 script:
