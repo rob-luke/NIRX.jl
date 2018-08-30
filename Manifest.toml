@@ -1,2 +1,13 @@
+[[DataDeps]]
+deps = ["DelimitedFiles", "HTTP", "Reexport", "SHA", "Test"]
+git-tree-sha1 = "687644d60b0d6bc95b5a9087f2bdb68b79d2c069"
+uuid = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
+version = "0.5.1"
+
 [[DelimitedFiles]]
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+
+[[Test]]
+deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
+uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
