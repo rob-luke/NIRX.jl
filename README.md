@@ -7,9 +7,8 @@ Read NIRX files in Julia
 
 ## Installation
 
-Until this package is registered use...
 ```julia
-Pkg.add("https://github.com/rob-luke/NIRX.jl.git")
+Pkg.add("NIRX")
 ```
 
 
@@ -19,6 +18,7 @@ Read a NIRX folder using ...
 ```julia
 triggers, header_info, info, wl1, wl2, config = read_NIRX("path/to/your/data")
 ```
+
 
 ## Tests
 
