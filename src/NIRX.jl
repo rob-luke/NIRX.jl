@@ -21,7 +21,7 @@ function read_NIRX(directory::String)
     @debug "Base file name is $file_basename"
 
     triggers = read_event_file(string(directory, "/", file_basename, ".evt"))
-    header_info, header_triggers, header_SD = read_header_file(string(directory, "/", file_basename, ".hdr"))
+    header_info, header_triggers = read_header_file(string(directory, "/", file_basename, ".hdr"))
     info  = read_information_file(string(directory, "/", file_basename, ".inf"))
     wl1  = read_wavelength_file(string(directory, "/", file_basename, ".wl1"))
     wl2  = read_wavelength_file(string(directory, "/", file_basename, ".wl2"))
@@ -120,12 +120,12 @@ function read_header_file(filename::String)
         header_SD_mask[pair_idx] = SD_mask[header_SD_source[pair_idx], header_SD_detector[pair_idx]]
     end
 
-    header_SD = [header_SD_source header_SD_detector header_SD_index header_SD_mask]
+    HDR["SourceDetectorMask"] = [header_SD_source header_SD_detector header_SD_index header_SD_mask]
     # SD is source, detector, index, mask
 
 
     @debug "Imported header data from file $filename"
-    return HDR, triggers, header_SD
+    return HDR, triggers
 end
 
 
