@@ -1,11 +1,11 @@
 module NIRX
 
-using DelimitedFiles
+using DelimitedFiles, CSV
 
 export read_NIRX
 
 function read_NIRX(directory::String)
-    @assert isdir(directory) "Directory does not exist"
+    @assert isdir(directory) string("Directory does not exist:", directory)
     @info "Loading directory $(directory)"
 
     # Check required files
@@ -148,7 +148,8 @@ function read_information_file(filename::String)
 end
 
 function read_wavelength_file(filename::String)
-    data = readdlm(filename)
+    dataframe = CSV.read(filename, delim=' ', header=0)
+    data = convert(Matrix, dataframe)
     @debug "Imported wavelength data from file $filename"
     return data
 end
@@ -169,6 +170,6 @@ function read_config_file(filename::String)
     @debug "Imported config data from file $filename"
     return CFG
 end
-    
-end
 
+
+end
