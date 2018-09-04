@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/rob-luke/NIRX.jl.svg?branch=master)](https://travis-ci.com/rob-luke/NIRX.jl)
 
-Read NIRX files in Julia
+Read [NIRX](https://nirx.net/) functional near-infrared spectroscopy files in Julia
 
 
 ## Installation
