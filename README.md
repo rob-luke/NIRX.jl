@@ -22,7 +22,7 @@ triggers, header_info, info, wl1, wl2, config = read_NIRX("path/to/your/data")
 
 ## Tests
 
-Tests are automatically run on continuous integration servers, the icon above indicates if they are passing. To run the tests locally run...
+Tests are automatically run on continuous integration servers, the icon above indicates if they are passing. Run the tests locally using...
 ```julia
 ] test NIRX
 ```
