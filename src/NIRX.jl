@@ -139,8 +139,13 @@ function read_information_file(filename::String)
         if !isempty(line_out) & occursin("=", line_out)
             split_string = split(line_out, "=")
             split_string[2] = replace(split_string[2], "\"" => "")
-            INF[split_string[1]] = split_string[2]
+	    INF[split_string[1]] = string(split_string[2])
         end
+    end
+
+    # Fix types for things that arent strings
+    if ~isempty(INF["Age"])
+        INF["Age"] = parse(Float64, INF["Age"])
     end
 
     @debug "Imported information data from file $filename"

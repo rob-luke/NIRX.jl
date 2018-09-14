@@ -37,3 +37,20 @@ tri_true = h5read(string(datadep"NIRX results file 1", "/fNIRS-test-data.h5"), "
 @test wl1[:, Bool.(header_info["SourceDetectorMask"][:, 4])] == wl1_true
 @test wl2[:, Bool.(header_info["SourceDetectorMask"][:, 4])] == wl2_true
 @test triggers == tri_true
+
+# Test types of returned info
+@test isa(info["Name"], String)
+@test isa(info["Age"], Number)
+@test isa(info["Gender"], String)
+@test isa(info["Contact Information"], String)
+@test isa(info["Study Type"], String)
+@test isa(info["Experiment History"], String)
+@test isa(info["Additional Notes"], String)
+@test info["Name"] == "Rob"
+@test info["Age"] == 32
+@test info["Gender"] == ""
+@test info["Contact Information"] == ""
+@test info["Study Type"] == "Tapping"
+@test info["Experiment History"] == ""
+@test info["Additional Notes"] == "Participant 3"
+
