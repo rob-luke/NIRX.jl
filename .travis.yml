@@ -21,8 +21,5 @@ addons:
   homebrew:
     packages:
     - hdf5
-
-before_script:
-    - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; brew link --overwrite gcc; brew install hdf5; fi
 script:
     - julia -e 'using Pkg; Pkg.test("NIRX")'
