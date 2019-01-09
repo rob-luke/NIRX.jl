@@ -122,7 +122,51 @@ function read_header_file(filename::String)
 
     HDR["SourceDetectorMask"] = [header_SD_source header_SD_detector header_SD_index header_SD_mask]
     # SD is source, detector, index, mask
+    
 
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    darknoise1 = [parse(Float64, val) for val in split(line_out, "\t")]
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    darknoise2 = [parse(Float64, val) for val in split(line_out, "\t")]
+    darknoise = hcat(darknoise1, darknoise2)
+    HDR["DarkNoise"] = darknoise
+
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    CT_1 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
+    for source = 1:size(SD_mask, 1)
+        line_out = readline(f)
+        split_string = split(line_out, "\t")
+        CT_1[source, :] = [parse(Float64, s) for s in split_string]
+    end
+    line_out = readline(f)
+    line_out = readline(f)
+    CT_2 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
+    for source = 1:size(SD_mask, 1)
+        line_out = readline(f)
+        split_string = split(line_out, "\t")
+        CT_2[source, :] = [parse(Float64, s) for s in split_string]
+    end
+    CT = zeros(size(CT_1, 1), size(CT_1, 2), 2)
+    CT[:, :, 1] = CT_1
+    CT[:, :, 2] = CT_2
+    HDR["CrossTalk"] = CT
+
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)
+    line_out = readline(f)[10:end-1]
+    line_out = split(line_out, "\t")
+    ChannelDistances = [parse(Float64, s) for s in line_out]
+    HDR["ChannelDistances"] = ChannelDistances
 
     @debug "Imported header data from file $filename"
     return HDR, triggers
