@@ -6,7 +6,7 @@ export read_NIRX
 
 function read_NIRX(directory::String)
     @assert isdir(directory) string("Directory does not exist:", directory)
-    @info "Loading directory $(directory)"
+    @debug "Loading directory $(directory)"
 
     # Check required files
     directory_files = readdir(directory)
@@ -115,6 +115,7 @@ function read_header_file(filename::String)
         split_string = split(line_out, "\t")
         SD_mask[source, :] = [parse(Int64, s) for s in split_string]
     end
+    HDR["Mask"] = SD_mask
     header_SD_mask = Vector{Int64}(undef, length(header_SD_detector))
     for pair_idx in 1:length(header_SD_detector)
         header_SD_mask[pair_idx] = SD_mask[header_SD_source[pair_idx], header_SD_detector[pair_idx]]
@@ -140,29 +141,31 @@ function read_header_file(filename::String)
     line_out = readline(f)
     line_out = readline(f)
     line_out = readline(f)
-    line_out = readline(f)
-    CT_1 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
-    for source = 1:size(SD_mask, 1)
-        line_out = readline(f)
-        split_string = split(line_out, "\t")
-        CT_1[source, :] = [parse(Float64, s) for s in split_string]
+    if line_out == "[CrossTalk]"
+	line_out = readline(f)
+	CT_1 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
+	    for source = 1:size(SD_mask, 1)
+		line_out = readline(f)
+		split_string = split(line_out, "\t")
+		CT_1[source, :] = [parse(Float64, s) for s in split_string]
+	    end
+	line_out = readline(f)
+	line_out = readline(f)
+	CT_2 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
+	    for source = 1:size(SD_mask, 1)
+		line_out = readline(f)
+		split_string = split(line_out, "\t")
+		CT_2[source, :] = [parse(Float64, s) for s in split_string]
+	 end
+	 CT = zeros(size(CT_1, 1), size(CT_1, 2), 2)
+	 CT[:, :, 1] = CT_1
+	 CT[:, :, 2] = CT_2
+	 HDR["CrossTalk"] = CT
+    	 line_out = readline(f)
+         line_out = readline(f)
+         line_out = readline(f)
     end
-    line_out = readline(f)
-    line_out = readline(f)
-    CT_2 = Array{Float64}(undef, maximum(header_SD_source), maximum(header_SD_detector))
-    for source = 1:size(SD_mask, 1)
-        line_out = readline(f)
-        split_string = split(line_out, "\t")
-        CT_2[source, :] = [parse(Float64, s) for s in split_string]
-    end
-    CT = zeros(size(CT_1, 1), size(CT_1, 2), 2)
-    CT[:, :, 1] = CT_1
-    CT[:, :, 2] = CT_2
-    HDR["CrossTalk"] = CT
 
-    line_out = readline(f)
-    line_out = readline(f)
-    line_out = readline(f)
     line_out = readline(f)[10:end-1]
     line_out = split(line_out, "\t")
     ChannelDistances = [parse(Float64, s) for s in line_out]

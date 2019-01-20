@@ -21,7 +21,7 @@ register(DataDep("NIRX results file 1", "Single fNIRS experiment recording",
 triggers, header_info, info, wl1, wl2, config = read_NIRX(string(datadep"NIRX test file 1", "/fNIRS-test-data"))
 
 @test size(triggers) == (62, 2)
-@test length(header_info) == 26
+@test length(header_info) == 27
 @test length(info) == 7
 @test size(wl1) == (7008, 256)
 @test size(wl2) == (7008, 256)
