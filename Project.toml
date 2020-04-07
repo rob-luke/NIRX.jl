@@ -1,7 +1,7 @@
 name = "NIRX"
 uuid = "f8c78b77-5d66-5574-88fe-980e6170bf40"
 authors = ["Robert Luke"]
-version = "0.1.5"
+version = "0.1.4"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
