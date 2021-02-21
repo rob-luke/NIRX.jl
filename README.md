@@ -1,6 +1,9 @@
 # NIRX.jl
 
-[![Build Status](https://travis-ci.com/rob-luke/NIRX.jl.svg?branch=master)](https://travis-ci.com/rob-luke/NIRX.jl)
+[![Tests](https://github.com/rob-luke/NIRX.jl/actions/workflows/Tests.yml/badge.svg)](https://github.com/rob-luke/NIRX.jl/actions/workflows/Tests.yml)
+[![codecov](https://codecov.io/gh/rob-luke/NIRX.jl/branch/master/graph/badge.svg?token=PaQqxNHQjK)](https://codecov.io/gh/rob-luke/NIRX.jl)
+
+
 
 Read [NIRX](https://nirx.net/) functional near-infrared spectroscopy files in Julia.
 
