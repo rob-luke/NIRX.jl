@@ -13,5 +13,5 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 CSV = "0.6.0, 0.7, 0.8"
 DataDeps = "0.7.2"
-HDF5 = "0.13.1"
+HDF5 = "0.13.1, 0.15"
 julia = "1"
