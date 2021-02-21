@@ -1,6 +1,6 @@
 module NIRX
 
-using DelimitedFiles, CSV
+using DelimitedFiles, CSV, DataFrames
 
 export read_NIRX
 
@@ -200,7 +200,7 @@ function read_information_file(filename::String)
 end
 
 function read_wavelength_file(filename::String)
-    dataframe = CSV.read(filename, delim=' ', header=0)
+    dataframe = CSV.read(filename, DataFrame, delim=' ', header=0)
     data = convert(Matrix, dataframe)
     @debug "Imported wavelength data from file $filename"
     return data
