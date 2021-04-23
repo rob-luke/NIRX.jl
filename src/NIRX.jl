@@ -201,7 +201,7 @@ end
 
 function read_wavelength_file(filename::String)
     dataframe = CSV.read(filename, DataFrame, delim=' ', header=0)
-    data = convert(Matrix, dataframe)
+    data = Matrix(dataframe)
     @debug "Imported wavelength data from file $filename"
     return data
 end
